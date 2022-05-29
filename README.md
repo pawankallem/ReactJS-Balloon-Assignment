@@ -1,6 +1,9 @@
 # ReactJS-Balloon-Assignment
 This is Balloon Shoot game which is built using ReactJS and also it is responsive so we can play it from Mobiles and Tablets.
 
+# Deployed Link : 
+https://react-js-balloon-assignment.vercel.app/
+
 
 # Tech Stack Used
 
