@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Colors.css";
 
 export const Colors = () => {
-  let [color, setColor] = useState([]);
-  let [outputArr, setOutputArr] = useState([]);
-  let [warningColor, setWarningColor] = useState("Blue");
-  let inputRef = useRef();
+
+  let [color, setColor] = useState([]);          // This state is to use the color when the component is mounter;
+  let [emptyDivArray, setemptyDivArray] = useState([]);      // This state is to use to add the object when shoot button is clicked;
+  let [alertUser, setalertUser] = useState("Blue");       // to give the alert to the user what numbers they can use;
+  let inputRef = useRef();      // to store the value of the input number;
 
   useEffect(() => {
-    let temp = getColors();
-    setColor(temp);
+    setColor(getColors());
   }, []);
 
-  const getColors = () => {
+  // getColors function is to return the random array of objects with color and unique values with the help of getRandom function;
+  const getColors = () => {  
     let fiveColors = ["blue", "red", "yellow", "orange", "pink"];
     let arr = [];
     for (let i = 0; i < 5; i++) {
@@ -25,23 +26,27 @@ export const Colors = () => {
     return arr;
   };
 
-  const getRandom = (min, max) => {
+  // getRandom function is used to generate the random number from the parameters;
+  const getRandom = (min, max) => {  
     let step1 = max - min + 1;
     let step2 = Math.random() * step1;
     let result = Math.floor(step2) + min;
     return result;
   };
 
-  const handleClick = (warning) => {
-    let arr = [];
-    if (inputRef.current.value > color.length) {
-      setWarningColor("red");
+  // handleShoot function is use to manage the Event of the Shoot buttonThe changes in Circles and Empty div are done in this function;
+  const handleShoot = () => {       
+
+    if (inputRef.current.value > color.length) {  // This condition to alert the user; 
+      setalertUser("red");
       return;
     }
-    setWarningColor("blue");
+
+    let arr = [];
+    setalertUser("blue");
     for (let i = 0; i < color.length; i++) {
       if (inputRef.current.value == i + 1) {
-        setOutputArr([...outputArr, ...[color[i]]]);
+        setemptyDivArray([...emptyDivArray, ...[color[i]]]);
       } else {
         arr.push(color[i]);
       }
@@ -49,44 +54,46 @@ export const Colors = () => {
     setColor(arr);
   };
 
-  const handleClickOuterArr = (e) => {
-    let arr = [];
-    for (let i = 0; i < outputArr.length; i++) {
-      let num = Object.values(outputArr[i]);
+  // handleOnclickForCircles is used to make the circles back to it's previous places and remove from empty-div;
+  const handleOnclickForCircles = (e) => {
+    let outerArray = [];
+    for (let i = 0; i < emptyDivArray.length; i++) {  // This loop is to remove the circle which is clicked ;
+      let num = Object.values(emptyDivArray[i]);
       if (num == e.target.id) {
-        let arr1 = [];
+        let innerArray = [];
         let count = 0;
-        for (let j = 0; j < color.length; j++) {
-          let temp = Object.values(color[j]);
-          if (temp[0] > num && count == 0) {
-            arr1.push(outputArr[i]);
-            arr1.push(color[j]);
+        for (let j = 0; j < color.length; j++) {  // This loop is to add the object into array by the original order of elements;
+          let value = Object.values(color[j]);
+          if (value[0] > num && count == 0) {
+            innerArray.push(emptyDivArray[i]);
+            innerArray.push(color[j]);
             count++;
           } else {
-            arr1.push(color[j]);
+            innerArray.push(color[j]);
           }
         }
-        if (arr1.length != color.length + 1) {
-          console.log(arr1, color);
-          arr1.push(outputArr[i]);
+        if (innerArray.length != color.length + 1) {
+          // console.log(innerArray, color);
+          innerArray.push(emptyDivArray[i]);
         }
-        setColor(arr1);
+        setColor(innerArray);
       } else {
-        arr.push(outputArr[i]);
+        outerArray.push(emptyDivArray[i]);
       }
     }
-    setOutputArr(arr);
+    setemptyDivArray(outerArray);
   };
 
   return (
     <div id="main-div">
+      {/* Empty Container for shifting the circles as per shoot click */}
       <div>
         <h2> Empty div </h2>
         <div id="empty-div">
-          {outputArr.map((c) => {
+          {emptyDivArray.map((c) => {
             return (
               <div
-                onClick={handleClickOuterArr}
+                onClick={handleOnclickForCircles}
                 className="empty-div-circles"
                 id={Object.values(c)}
                 key={Object.values(c)}
@@ -98,6 +105,7 @@ export const Colors = () => {
           })}
         </div>
       </div>
+      {/* div for showing Circles/Balloons when UI is mounted */}
       <div>
         <h2> Circle/s </h2>
         <div id="colored-circles-div">
@@ -113,15 +121,16 @@ export const Colors = () => {
           })}
         </div>
       </div>
+        {/* div which contains input and button */}
       <div>
         <h2> Provide Number and Shoot </h2>
         <div id="input-div">
-          <div style={{ color: `${warningColor}` }}>
+          <div style={{ color: `${alertUser}` }}>
             {" "}
             Note : Please enter Number equal / below :  {color.length} .{" "}
           </div>
           <input ref={inputRef} type="number" min="1" max={color.length} />
-          <button onClick={handleClick}>Shoot</button>
+          <button onClick={handleShoot}>Shoot</button>
         </div>
       </div>
     </div>
