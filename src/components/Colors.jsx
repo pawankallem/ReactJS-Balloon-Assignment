@@ -80,40 +80,49 @@ export const Colors = () => {
 
   return (
     <div id="main-div">
-      <div id="output-div">
-        {outputArr.map((c) => {
-          return (
-            <div
-              onClick={handleClickOuterArr}
-              className="showOutput"
-              id={Object.values(c)}
-              key={Object.values(c)}
-              style={{
-                backgroundColor: `${Object.keys(c)}`,
-              }}
-            ></div>
-          );
-        })}
-      </div>
-      <div id="colored-circles-div">
-        {color.map((c) => {
-          return (
-            <div
-              className="circles"
-              id={Object.values(c)}
-              key={Object.values(c)}
-              style={{ backgroundColor: `${Object.keys(c)}` }}
-            ></div>
-          );
-        })}
-      </div>
-      <div id="input-div">
-        <div style={{ color: `${warningColor}` }}>
-          {" "}
-          Note : Please enter Number equal / below - {color.length} .{" "}
+      <div>
+        <h2> Empty div </h2>
+        <div id="empty-div">
+          {outputArr.map((c) => {
+            return (
+              <div
+                onClick={handleClickOuterArr}
+                className="empty-div-circles"
+                id={Object.values(c)}
+                key={Object.values(c)}
+                style={{
+                  backgroundColor: `${Object.keys(c)}`,
+                }}
+              ></div>
+            );
+          })}
         </div>
-        <input ref={inputRef} type="number" min="1" max={color.length} />
-        <button onClick={handleClick}>Shoot</button>
+      </div>
+      <div>
+        <h2> Circle/s </h2>
+        <div id="colored-circles-div">
+          {color.map((c) => {
+            return (
+              <div
+                className="circles"
+                id={Object.values(c)}
+                key={Object.values(c)}
+                style={{ backgroundColor: `${Object.keys(c)}` }}
+              ></div>
+            );
+          })}
+        </div>
+      </div>
+      <div>
+        <h2> Provide Number and Shoot </h2>
+        <div id="input-div">
+          <div style={{ color: `${warningColor}` }}>
+            {" "}
+            Note : Please enter Number equal / below :  {color.length} .{" "}
+          </div>
+          <input ref={inputRef} type="number" min="1" max={color.length} />
+          <button onClick={handleClick}>Shoot</button>
+        </div>
       </div>
     </div>
   );
