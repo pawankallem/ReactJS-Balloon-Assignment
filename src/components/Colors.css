@@ -1,0 +1,54 @@
+#main-div {
+  display: grid;
+  width: 96%;
+  padding: 2%;
+  height: 80vh;
+  grid-template:
+    ". . . b b . ."
+    "a a a b b c c"
+    "a a a b b . .";
+}
+
+#output-div {
+  grid-area: a;
+  display: flex;
+  gap: 5px;
+  background-color: gray;
+  align-items: center;
+  justify-content: center;
+  padding: 1%;
+}
+
+.showOutput {
+  border: 1px solid gray;
+  border-radius: 50%;
+  width: 20%;
+  height: 80%;
+}
+
+#colored-circles-div {
+  grid-area: b;
+  border: 1px solid;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 20%;
+  height: 100%;
+  justify-content: center;
+}
+
+.circles {
+  border: 1px solid gray;
+  border-radius: 50%;
+}
+
+/* input and button div */
+
+#input-div {
+  grid-area: c;
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
